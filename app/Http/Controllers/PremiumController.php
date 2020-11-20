@@ -17,6 +17,7 @@ class PremiumController extends Controller
     private $UserPanel;
 
     public function __construct() {
+        $this->middleware('auth');
         $this->SmartPanel = app(SmartPanel::class);
         $this->UserPanel = app(UserPanel::class);
     }

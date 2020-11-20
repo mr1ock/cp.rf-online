@@ -1,33 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use App\Http\Requests\ChangePasswordUserRequest;
+use App\Http\Requests\FixPersonRequest;
 use App\MyFacade\UserPanel;
 
 
 class OptionsPersonController extends Controller
 {
 
-
     private $UserPanel;
 
     public function __construct() {
+        $this->middleware('auth');
         $this->UserPanel = app(UserPanel::class);
     }
 
-    public function changePasswordUser(Request $req) {
+    public function changePasswordUser(ChangePasswordUserRequest $req) {
             
         $resultMessage = $this->UserPanel->changePassword($req);
         
         return redirect()->route('editpass')->with('success', $resultMessage);
     }
 
-    public function fixPerson(Request $req) {
-        
-        $this->validate(request(),[
-            'name' => 'required'
-        ]);
+    public function fixPerson(FixPersonRequest $req) {
         
         $this->UserPanel->fixErrorPerson($req);
 

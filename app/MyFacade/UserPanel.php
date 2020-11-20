@@ -13,15 +13,19 @@ class UserPanel {
 
     private $tbl_rfaccount;
     private $SmartPanel;
+    private $billing;
+    private $RF_World;
 
     public function __construct() {
         $this->tbl_rfaccount = app(rfaccount::class);
         $this->SmartPanel = app(SmartPanel::class);
+        $this->billing = DB::connection('sqlsrv_bil');
+        $this->RF_World = DB::connection('RF_World');
     }
 
     public function viewCash($person) {
-        $billing = DB::connection('sqlsrv_bil');
-        return $billing->table('tbl_user')->where('UserID', '=', $person )->value('Cash');
+        $this->billing = DB::connection('sqlsrv_bil');
+        return $this->billing->table('tbl_user')->where('UserID', '=', $person )->value('Cash');
     }
 
     public function viewFG($idconvert) {
@@ -33,10 +37,9 @@ class UserPanel {
     }
 
     public function viewPremiumStatus($idconvert) {
-        $billing = DB::connection('sqlsrv_bil');
 
-        $premium_date = $billing->table('tbl_personal_billing')->where('ID', '=', $idconvert )->value('EndDate');
-        $billing_type = $billing->table('tbl_personal_billing')->where('ID', '=', $idconvert )->value('BillingType');
+        $premium_date = $this->billing->table('tbl_personal_billing')->where('ID', '=', $idconvert )->value('EndDate');
+        $billing_type = $this->billing->table('tbl_personal_billing')->where('ID', '=', $idconvert )->value('BillingType');
 
         if($premium_date >= (Carbon::now()->addHours(3)) && ($billing_type == 2)){
             $endprem_date = date('Y.m.d H:m:s', strtotime($premium_date));
@@ -48,13 +51,11 @@ class UserPanel {
     }
 
     public function veiwPremiumEndDate($idconvert){
-        $billing = DB::connection('sqlsrv_bil');
-        return $billing->table('tbl_personal_billing')->where('ID', '=', $idconvert )->value('EndDate');
+        return $this->billing->table('tbl_personal_billing')->where('ID', '=', $idconvert )->value('EndDate');
     }
 
     public function connectionPremium($request, $idconvert) {
-        $billing = DB::connection('sqlsrv_bil');
-        
+
         $today15 = Carbon::now()->addDays(15)->addHours(3);
         $cash_result = $this->UserPanel->viewCash(Auth::user()->name);
 
@@ -63,10 +64,10 @@ class UserPanel {
             
             if($cash_result >= 180) {
             $cash_result -= 180;
-            $billing->table('tbl_user')->where('UserID',  (Auth::user()->name))
+            $this->billing->table('tbl_user')->where('UserID',  (Auth::user()->name))
                     ->update(array('Cash' =>  $cash_result ));
                
-            $billing->table('tbl_personal_billing')->where('ID',  $idconvert)
+            $this->billing->table('tbl_personal_billing')->where('ID',  $idconvert)
                     ->update(array(
                         'BillingType' => 2,
                         'EndDate' => $today15
@@ -85,10 +86,10 @@ class UserPanel {
         
             if($cash_result >= 300) {
             $cash_result -= 300;
-            $billing->table('tbl_user')->where('UserID',  (Auth::user()->name))
+            $this->billing->table('tbl_user')->where('UserID',  (Auth::user()->name))
                     ->update(array('Cash' =>  $cash_result ));
                
-            $billing->table('tbl_personal_billing')->where('ID',  $idconvert)
+            $this->billing->table('tbl_personal_billing')->where('ID',  $idconvert)
                     ->update(array(
                         'BillingType' => 2,
                         'EndDate' => $today30
@@ -113,7 +114,6 @@ class UserPanel {
         
         if(Hash::check($oldPassword, Auth::user()->password)) {
 
-
             $req->user()->update([
                 'password' => Hash::make($newPassword)
             ]);
@@ -130,10 +130,8 @@ class UserPanel {
     }
 
     public function fixErrorPerson($req) {
-        $RF_World = DB::connection('RF_World');
+        $serial = $this->RF_World->table('tbl_base')->where('Name', '=', ($req->input('name')))->value('Serial');
         
-        $serial = $RF_World->table('tbl_base')->where('Name', '=', ($req->input('name')))->value('Serial');
-        
-        $RF_World->table('tbl_NpcData')->where('Serial', '=', $serial)->delete();
+        $this->RF_World->table('tbl_NpcData')->where('Serial', '=', $serial)->delete();
     }
 }
