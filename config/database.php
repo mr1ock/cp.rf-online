@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'sqlsrv'),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +77,6 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
-
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
@@ -90,6 +89,44 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
+        'sqlsrv_bil' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
+            'host' =>  '192.168.58.29',
+            'port' => '1433',
+            'database' =>  'BILLING',
+            'username' => 'sa',
+            'password' => '123',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        
+        ],
+        'RF_World' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
+            'host' =>  '192.168.58.29',
+            'port' => '1433',
+            'database' =>  'RF_World',
+            'username' => 'sa',
+            'password' => '123',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        
+        ],
+        'ItemsDB' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
+            'host' =>  '192.168.58.29',
+            'port' => '1433',
+            'database' =>  'ItemsDB',
+            'username' => 'sa',
+            'password' => '123',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ]
 
     ],
 

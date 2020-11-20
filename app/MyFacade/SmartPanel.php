@@ -1,7 +1,6 @@
 <?php
 
 namespace App\MyFacade;
-use App\Panel;
 use Illuminate\Support\Facades\DB;
 use App\MyFacade\ItemCaseFacade as ItemCase;
 use Illuminate\Support\Facades\Auth;
@@ -12,11 +11,6 @@ class SmartPanel {
     public function convertInBynary($sourceData) {
         return DB::raw("CONVERT(VARBINARY(MAX), '". $sourceData ."')");
     }
-
-    public function test($sourceData) {
-        dd($sourceData);
-    }
-
 
     public function varifyLoginInTbl_Users($login) {
 
@@ -47,8 +41,8 @@ class SmartPanel {
     public function changePassAccount($req) {
         $password = bcrypt($req->input('pass'));
 
-        $idconvert = SmartPanel::convertInBynary($req->input('name'));
-        $passConvert = SmartPanel::convertInBynary($req->input('pass'));
+        $idconvert = $this->SmartPanel->convertInBynary($req->input('name'));
+        $passConvert = $this->SmartPanel->convertInBynary($req->input('pass'));
 
         DB::table('users')->where('name',  $req->input('name'))
                     ->update(array('password' => $password ));
@@ -59,9 +53,9 @@ class SmartPanel {
 
     public function changePassSklad($req) {
         $RF_World = DB::connection('RF_World');
-        $passConvert = SmartPanel::convertInBynary($req->input('pass'));
+        $passConvert = $this->SmartPanel->convertInBynary($req->input('pass'));
 
-        $serial = SmartPanel::viewAccountSerial($req->input('name'));
+        $serial =$this->SmartPanel->viewAccountSerial($req->input('name'));
 
         $RF_World->table('tbl_AccountTrunk')
                  ->where('AccountSerial',  $serial)
@@ -69,8 +63,8 @@ class SmartPanel {
     }
 
     public function changeFgPassword($req) {
-        $idconvert = SmartPanel::convertInBynary($req->input('name'));
-        $passConvert = SmartPanel::convertInBynary($req->input('pass'));
+        $idconvert = $this->SmartPanel->convertInBynary($req->input('name'));
+        $passConvert =$this->SmartPanel->convertInBynary($req->input('pass'));
        
         DB::table('tbl_UserAccount')->where('id',  $idconvert)
                     ->update(array('uilock_pw' => $passConvert ));
@@ -85,8 +79,8 @@ class SmartPanel {
 
     public function createGmAccount($req) {
         $billing = DB::connection('sqlsrv_bil');
-        $idconvert = SmartPanel::convertInBynary($req->input('name'));
-        $passConvert = SmartPanel::convertInBynary($req->input('pass'));
+        $idconvert = $this->SmartPanel->convertInBynary($req->input('name'));
+        $passConvert = $this->SmartPanel->convertInBynary($req->input('pass'));
 
         DB::table('tbl_StaffAccount')->insert([[
             'ID' => $idconvert, 
@@ -191,7 +185,7 @@ class SmartPanel {
     public function viewPersonInAccount($req){
         $RF_World = DB::connection('RF_World');
 
-        $idconvert = SmartPanel::convertInBynary($req->input('name'));
+        $idconvert = $this->SmartPanel->convertInBynary($req->input('name'));
 
         $arrayData['info'] = DB::table('tbl_rfaccount')
                     ->where('tbl_UserAccount.id', '=', $idconvert)

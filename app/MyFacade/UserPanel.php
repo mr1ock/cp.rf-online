@@ -2,7 +2,7 @@
 
 namespace App\MyFacade;
 use Illuminate\Support\Facades\Auth;
-use App\MyFacade\SmartPanelFacade as SmartPanel;
+use App\MyFacade\SmartPanel;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -12,9 +12,11 @@ use App\Models\rfaccount;
 class UserPanel {
 
     private $tbl_rfaccount;
+    private $SmartPanel;
 
     public function __construct() {
         $this->tbl_rfaccount = app(rfaccount::class);
+        $this->SmartPanel = app(SmartPanel::class);
     }
 
     public function viewCash($person) {
@@ -54,7 +56,7 @@ class UserPanel {
         $billing = DB::connection('sqlsrv_bil');
         
         $today15 = Carbon::now()->addDays(15)->addHours(3);
-        $cash_result = UserPanel::viewCash(Auth::user()->name);
+        $cash_result = $this->UserPanel->viewCash(Auth::user()->name);
 
         //Если реквест с премом на 15 дней
         if ($request->input('type') == 1) {
@@ -106,9 +108,8 @@ class UserPanel {
         $oldPassword = $req->input('password');
         $newPassword = $req->input('new_password');
 
-        $idconvert = SmartPanel::convertInBynary(Auth::user()->name);
-        $passConvert = SmartPanel::convertInBynary($newPassword);
-        //dd($this->tbl_rfaccount);
+        $idconvert = $this->SmartPanel->convertInBynary(Auth::user()->name);
+        $passConvert = $this->SmartPanel->convertInBynary($newPassword);
         
         if(Hash::check($oldPassword, Auth::user()->password)) {
 
