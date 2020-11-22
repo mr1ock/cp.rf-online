@@ -57,7 +57,7 @@ class UserPanel {
     public function connectionPremium($request, $idconvert) {
 
         $today15 = Carbon::now()->addDays(15)->addHours(3);
-        $cash_result = $this->UserPanel->viewCash(Auth::user()->name);
+        $cash_result = $this->viewCash(Auth::user()->name);
 
         //Если реквест с премом на 15 дней
         if ($request->input('type') == 1) {

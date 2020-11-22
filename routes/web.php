@@ -1,8 +1,9 @@
 <?php
 
-// namespace App\Http\Controllers;
+//  namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return redirect('home');
@@ -38,5 +39,10 @@ Route::get('/parsVote', [App\Http\Controllers\IndexController::class, 'pars']);
 Route::post('/createdon', [App\Http\Controllers\DonateController::class, 'AcceptYandex']);
 
 
+//Adminka
+Route::get('/Bf@3z552v784^cX1', [App\Http\Controllers\AdminController::class, 'index'])->name('admin')->middleware(['admin', 'auth']);
 
-
+Route::get('/Bf@3z552v784^cX2', [App\Http\Controllers\AdminController::class, 'createGm'])->name('createGm')->middleware(['admin', 'auth']);
+Route::get('/Bf@3z552v784^cX3', [App\Http\Controllers\AdminController::class, 'pers'])->name('pers')->middleware(['admin', 'auth']);
+Route::get('/Bf@3z552v784^cX4', [App\Http\Controllers\AdminController::class, 'giveItem'])->name('giveItem')->middleware(['admin', 'auth']);
+Route::get('/Bf@3z552v784^cX5', [App\Http\Controllers\AdminController::class, 'Accounts'])->name('Accounts')->middleware(['admin', 'auth']);
