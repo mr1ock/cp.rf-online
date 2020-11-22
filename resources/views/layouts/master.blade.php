@@ -64,7 +64,7 @@
                        <div class="col-md menu_btn">
                             <div class="row">
                                <div class="col-md-12">
-                                   <a class="link_menu cursor4" href="/rating">
+                                   <a class="link_menu cursor4" href="/rating/PvpPoint">
                                         <div class="d-flex justify-content-center">
                                             <div class="icon_4"></div>
                                         </div>

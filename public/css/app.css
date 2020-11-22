@@ -349,3 +349,8 @@ margin-left: 50px;
 td input {
   font-size: 10px;
 }
+
+.checked_type{
+  color: rgb(214, 39, 39) !important;
+  font-style: italic !important;
+}

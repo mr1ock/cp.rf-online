@@ -2,66 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\RatingRepository;
+
 use App\MyFacade\UserPanel;
+use App\MyFacade\Rating;
 
 class RatingController extends Controller
 {
-    private $ratingRepository;
     private $UserPanel;
+    private $Rating;
 
-    public function __construct(RatingRepository $ratingRepository) {
+    public function __construct()
+    {
         $this->middleware('auth');
-        $this->ratingRepository = $ratingRepository;
         $this->UserPanel = app(UserPanel::class);
+        $this->Rating = app(Rating::class);
     }
 
-    
-    public function rating() {
-        $resultRating = $this->ratingRepository->getRatingByOrder('PvpPoint');
-        
-        return view('rating', [
-            'cash' => $this->UserPanel->viewCash(Auth::user()->name),
-            'raiting' => $resultRating
-        ]);
-    }
-
-
-    public function ratingBel() {
-        $resultRating = $this->ratingRepository->getRatingByRace(0, 1);
-        
-        return view('ratingBel', [
-            'cash' => $this->UserPanel->viewCash(Auth::user()->name),
-            'raiting' => $resultRating
-        ]);
-    }
-
-    public function ratingKora() {
-        $resultRating = $this->ratingRepository->getRatingByRace(2, 3);
-        
-        return view('ratingKora', [
-            'cash' => $this->UserPanel->viewCash(Auth::user()->name),
-            'raiting' => $resultRating
-        ]);
-    }
-
-    public function ratingAkr() {
-        
-        $resultRating = $this->ratingRepository->getRatingByRace(4);
-        
-        return view('ratingAkr', [
-            'cash' => $this->UserPanel->viewCash(Auth::user()->name),
-            'raiting' => $resultRating
-        ]);
-    }
-
-    public function ratingDalant() {
-
-        $resultRating = $this->ratingRepository->getRatingByOrder('Dalant');
-        
-        return view('ratingDalant', [
+    public function rating($typeRequest)
+    {
+        $resultRating = $this->Rating->getRating($typeRequest);
+        dd($resultRating);
+        return view('rating/ViewRating', [
             'cash' => $this->UserPanel->viewCash(Auth::user()->name),
             'raiting' => $resultRating
         ]);

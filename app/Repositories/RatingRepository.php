@@ -23,16 +23,16 @@ class RatingRepository
                         'Race', 'PvpPoint', 'Account'
                     )                              
                     ->where([
-                        ['Lv', '>', 40],
                         ['DeleteName', '=', '*'],
-                        ['AccountSerial', '<', '100000']
+                        ['AccountSerial', '<', '100000'],
+                        ['Lv', '>', 40]
                     ])
                     ->orderBy($orderBy, 'desc')
                     ->simplePaginate(18);
         return $result;
     }
 
-    public function getRatingByRace($race, $addRace = 4){
+    public function getRatingByRace($race, $addRace){
 
         $result = $this->RF_World->table('tbl_base')
                     ->join('tbl_general',

@@ -20,12 +20,7 @@ Route::get('/editpass', [App\Http\Controllers\IndexController::class, 'edit'])->
 Route::get('/repairPerson', [App\Http\Controllers\IndexController::class, 'repair'])->name('repairPerson');
 Route::get('/vote', [App\Http\Controllers\IndexController::class, 'vote'])->name('vote');
 
-Route::get('/rating', [App\Http\Controllers\RatingController::class, 'rating'])->name('rating');
-Route::get('/ratingBel', [App\Http\Controllers\RatingController::class, 'ratingBel'])->name('ratingBel');
-Route::get('/ratingKora', [App\Http\Controllers\RatingController::class, 'ratingKora'])->name('ratingKora');
-Route::get('/ratingAkr', [App\Http\Controllers\RatingController::class, 'ratingAkr'])->name('ratingAkr');
-Route::get('/ratingDalant', [App\Http\Controllers\RatingController::class, 'ratingDalant'])->name('ratingDalant');
-
+Route::get('/rating/{type}', [App\Http\Controllers\RatingController::class, 'rating'])->name('rating');
 
 //POST
 Route::post('/buyPremium', [App\Http\Controllers\PremiumController::class, 'buyPremiumAccount'])->name('buyPremium');
