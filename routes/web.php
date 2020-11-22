@@ -30,8 +30,13 @@ Route::post('/fix', [App\Http\Controllers\OptionsPersonController::class, 'fixPe
 
 //MMOTOP обработчик голосов
 Route::post('/vote', [App\Http\Controllers\VoteController::class, 'vote'])->name('vote')->middleware('auth');
+//Если надо в ручную спарсить голоса
+Route::get('/parsVote', [App\Http\Controllers\IndexController::class, 'pars']);
+
 
 // Принимает post с Яндекса
 Route::post('/createdon', [App\Http\Controllers\DonateController::class, 'AcceptYandex']);
+
+
 
 

@@ -22,7 +22,6 @@ class RatingController extends Controller
     public function rating($typeRequest)
     {
         $resultRating = $this->Rating->getRating($typeRequest);
-        dd($resultRating);
         return view('rating/ViewRating', [
             'cash' => $this->UserPanel->viewCash(Auth::user()->name),
             'raiting' => $resultRating
