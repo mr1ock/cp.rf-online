@@ -46,7 +46,7 @@
                         <p >Поддержка проекта</p> --}}
                         <img class="kart" src="{{ asset('img/yandex2.png') }}" >
                         <img class="visa" src="{{ asset('img/visa.png') }}" >
-                        <form onsubmit="return submitForm()" method="POST" action="https://money.yandex.ru/quickpay/confirm.xml"> 
+                        <form onsubmit="return submitForm()" method="POST" action="https://yoomoney.ru/quickpay/confirm.xml"> 
                             <input type="hidden" name="receiver" value="4100115690291695"> 
                             <input type="hidden" name="quickpay-form" value="shop"> 
                             <input type="hidden" name="targets" value="Пожертвование от {{ Auth::user()->name}}"> 

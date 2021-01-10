@@ -64,7 +64,7 @@ class SmartPanel {
 
     public function changeFgPassword($req) {
         $idconvert = $this->SmartPanel->convertInBynary($req->input('name'));
-        $passConvert =$this->SmartPanel->convertInBynary($req->input('pass'));
+        $passConvert = $this->SmartPanel->convertInBynary($req->input('pass'));
        
         DB::table('tbl_UserAccount')->where('id',  $idconvert)
                     ->update(array('uilock_pw' => $passConvert ));
@@ -94,7 +94,7 @@ class SmartPanel {
 
         ]]);
 
-        $billing ->table('tbl_user')->insert([[
+        $billing->table('tbl_user')->insert([[
             'UserID' => $req->input('name'),
             'Cash' => 10000
         ]]);
