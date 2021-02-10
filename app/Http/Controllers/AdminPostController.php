@@ -151,7 +151,7 @@ class AdminPostController extends Controller {
 
     //Выводит инфу о персонажах на аккаунте
     public function getAccountInfo(Request $req) {
-
+        //dd($req->name);
         $arrayData = $this->SmartPanel->viewPersonInAccount($req);
        
         return view('adm\accounts', [

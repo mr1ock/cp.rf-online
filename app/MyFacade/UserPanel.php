@@ -24,7 +24,7 @@ class UserPanel {
     }
 
     public function viewCash($person) {
-        $this->billing = DB::connection('sqlsrv_bil');
+        //$this->billing = DB::connection('sqlsrv_bil');
         return $this->billing->table('tbl_user')->where('UserID', '=', $person )->value('Cash');
     }
 
